@@ -53,21 +53,26 @@ class App(ctk.CTk):
         self.titulo_vista.configure(text="Reportes de Empleados")
         #grid_reportes = ctk.CTkFrame(self.contenido_dinamico, fg_color="transparent")
         #grid_reportes.pack(pady=20, padx=20, fill="both")
-        ctk.CTkLabel(self.contenido_dinamico, text="Seleccione un reporte a generar:").pack(pady=10)
+        ctk.CTkLabel(self.contenido_dinamico, text="Seleccione un reporte a generar:").pack(pady=15)
         
-        btn_lista = ctk.CTkButton(self.contenido_dinamico, text="Listado general y filtrado", command=lambda: print("Reporte 1"))
+        ctk.CTkLabel(self.contenido_dinamico, text="1.- Listado general y filtrado por departamento").pack(pady=2)
+        btn_lista = ctk.CTkButton(self.contenido_dinamico, text="Reporte 1", command=lambda: print("Reporte 1"))
         btn_lista.pack(pady=5)
-        
-        btn_managers = ctk.CTkButton(self.contenido_dinamico, text="Managers por Depto", command=lambda: print("Reporte 2"))
+
+        ctk.CTkLabel(self.contenido_dinamico, text="2.- Managers por departamento").pack(pady=2)
+        btn_managers = ctk.CTkButton(self.contenido_dinamico, text="Reporte 2", command=lambda: print("Reporte 2"))
         btn_managers.pack(pady=5)
 
-        btn_mjrPagado = ctk.CTkButton(self.contenido_dinamico, text="Empleado mejor pagado por Depto", command=lambda: print("Reporte 3"))
+        ctk.CTkLabel(self.contenido_dinamico, text="3.- Empleado mejor pagado por departamento").pack(pady=2)
+        btn_mjrPagado = ctk.CTkButton(self.contenido_dinamico, text="Reporte 3", command=lambda: print("Reporte 3"))
         btn_mjrPagado.pack(pady=5)
 
-        btn_contratados = ctk.CTkButton(self.contenido_dinamico, text="Listado total de empleados por año", command=lambda: print("Reporte 4"))
+        ctk.CTkLabel(self.contenido_dinamico, text="4.- Listado total de empleados por año").pack(pady=2)
+        btn_contratados = ctk.CTkButton(self.contenido_dinamico, text="Reporte 4", command=lambda: print("Reporte 4"))
         btn_contratados.pack(pady=5)
 
-        btn_managers = ctk.CTkButton(self.contenido_dinamico, text="Listado descipcion de Depto", command=lambda: print("Reporte 5"))
+        ctk.CTkLabel(self.contenido_dinamico, text="5.- Listado descripción de departamento").pack(pady=2)
+        btn_managers = ctk.CTkButton(self.contenido_dinamico, text="Reporte 5", command=lambda: print("Reporte 5"))
         btn_managers.pack(pady=5)
         
 
@@ -78,15 +83,19 @@ class App(ctk.CTk):
         #grid_graficos.pack(pady=20, padx=20, fill="both")
         ctk.CTkLabel(self.contenido_dinamico, text="Seleccione un tipo de gráfica a generar:").pack(pady=10)
 
+        ctk.CTkLabel(self.contenido_dinamico, text="1.- Comparación del total de empleados por género").pack(pady=2)
         btn_grafico1 = ctk.CTkButton(self.contenido_dinamico, text="Gráfico 1", command=lambda: print("Gráfico 1"))
         btn_grafico1.pack(pady=5)
 
+        ctk.CTkLabel(self.contenido_dinamico, text="2.- Los 10 empleaados mejores pagados").pack(pady=2)
         btn_grafico2 = ctk.CTkButton(self.contenido_dinamico, text="Gráfico 2", command=lambda: print("Gráfico 2"))
         btn_grafico2.pack(pady=5)
 
+        ctk.CTkLabel(self.contenido_dinamico, text="3.- Promedio de salario por departamento").pack(pady=2)
         btn_grafico3 = ctk.CTkButton(self.contenido_dinamico, text="Gráfico 3", command=lambda: print("Gráfico 3"))
         btn_grafico3.pack(pady=5)
 
+        ctk.CTkLabel(self.contenido_dinamico, text="4.- Brecha salarial por cada departamento").pack(pady=2)
         btn_grafico4 = ctk.CTkButton(self.contenido_dinamico, text="Gráfico 4", command=lambda: print("Gráfico 4"))
         btn_grafico4.pack(pady=5)
 
