@@ -346,7 +346,8 @@ class App(ctk.CTk):
                     column=col,
                     padx=8,
                     pady=4,
-                    sticky="w"
+                    sticky="ew"
+                    
                 )
 
     def reporte_5(self):
