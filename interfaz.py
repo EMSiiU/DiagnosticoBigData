@@ -1,4 +1,5 @@
 import customtkinter as ctk
+from database import Database
 
 # Configuración inicial de apariencia
 ctk.set_appearance_mode("dark")  
@@ -8,7 +9,7 @@ class App(ctk.CTk):
         super().__init__()
 
         self.title("Examen diagnostico")
-        self.geometry("1100x700")
+        self.geometry("1200x700")
 
         self.grid_columnconfigure(1, weight=1)
         self.grid_rowconfigure(0, weight=1)
@@ -56,7 +57,11 @@ class App(ctk.CTk):
         ctk.CTkLabel(self.contenido_dinamico, text="Seleccione un reporte a generar:").pack(pady=15)
         
         ctk.CTkLabel(self.contenido_dinamico, text="1.- Listado general y filtrado por departamento").pack(pady=2)
-        btn_lista = ctk.CTkButton(self.contenido_dinamico, text="Reporte 1", command=lambda: print("Reporte 1"))
+        btn_lista = ctk.CTkButton(
+            self.contenido_dinamico,
+            text = "Reporte 1",
+            command = self.reporte_1
+            )
         btn_lista.pack(pady=5)
 
         ctk.CTkLabel(self.contenido_dinamico, text="2.- Managers por departamento").pack(pady=2)
@@ -75,6 +80,114 @@ class App(ctk.CTk):
         btn_managers = ctk.CTkButton(self.contenido_dinamico, text="Reporte 5", command=lambda: print("Reporte 5"))
         btn_managers.pack(pady=5)
         
+    def reporte_1(self):
+        self.limpiar_panel()
+        self.titulo_vista.configure(text="Listado de empleados")
+
+        # --- FILTRO ---
+        filtro_frame = ctk.CTkFrame(self.contenido_dinamico)
+        filtro_frame.pack(fill="x", pady=10)
+
+        ctk.CTkLabel(filtro_frame, text="Departamento:").pack(side="left", padx=5)
+
+        db = Database()
+        departamentos = db.departamentos()
+        db.cerrar()
+
+        self.dept_map = {d["dept_name"]: d["dept_no"] for d in departamentos}
+
+        self.combo_dept = ctk.CTkComboBox(
+            filtro_frame,
+            values=list(self.dept_map.keys()),
+            width=250
+        )
+        self.combo_dept.pack(side="left", padx=5)
+
+        ctk.CTkButton(
+            filtro_frame,
+            text="Aplicar filtro",
+            command=self.aplicar_filtro_departamento
+        ).pack(side="left", padx=10)
+
+        ctk.CTkButton(
+            filtro_frame,
+            text="Quitar filtro",
+            fg_color="#B22222",
+            hover_color="#8B1A1A",
+            command=self.quitar_filtro_departamento
+        ).pack(side="left", padx=5)
+
+        # --- CONTENEDOR DE TABLA ---
+        self.frame_tabla = ctk.CTkFrame(self.contenido_dinamico)
+        self.frame_tabla.pack(fill="both", expand=True, padx=10, pady=10)
+
+        self.mostrar_tabla_empleados()
+
+    def aplicar_filtro_departamento(self):
+        dept_name = self.combo_dept.get()
+        dept_no = self.dept_map.get(dept_name)
+
+        self.mostrar_tabla_empleados(dept_no)
+
+    def quitar_filtro_departamento(self):
+        self.mostrar_tabla_empleados()
+
+    def mostrar_tabla_empleados(self, dept_no=None):
+        # Limpiar tabla anterior
+        for widget in self.frame_tabla.winfo_children():
+            widget.destroy()
+
+        db = Database()
+        empleados = db.empleados(dept_no)
+        db.cerrar()
+
+        # Frame con scroll
+        tabla = ctk.CTkScrollableFrame(self.frame_tabla)
+        tabla.pack(fill="both", expand=True)
+
+        # Encabezados
+        encabezados = [
+            "No. Emp",
+            "Nombres",
+            "Apellidos",
+            "Nacimiento",
+            "Género",
+            "Contratación",
+            "Departamento",
+            "Título",
+            "Salario"
+        ]
+
+        for col, texto in enumerate(encabezados):
+            lbl = ctk.CTkLabel(
+                tabla,
+                text=texto,
+                font=ctk.CTkFont(weight="bold")
+            )
+            lbl.grid(row=0, column=col, padx=8, pady=6, sticky="w")
+
+        # Filas
+        for fila, emp in enumerate(empleados, start=1):
+            valores = [
+                emp["no_empleado"],
+                emp["nombres"],
+                emp["apellidos"],
+                emp["nacimiento"],
+                emp["genero"],
+                emp["contratacion"],
+                emp["departamento"],
+                emp["titulo_actual"],
+                f"${emp['salario_actual']}"
+            ]
+
+            for col, valor in enumerate(valores):
+                ctk.CTkLabel(tabla, text=str(valor)).grid(
+                    row=fila,
+                    column=col,
+                    padx=8,
+                    pady=4,
+                    sticky="w"
+                )
 
     def mostrar_vista_graficos(self):
         self.limpiar_panel()
