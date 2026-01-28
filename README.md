@@ -1,0 +1,2 @@
+# DiagnosticoBigData
+examen diagnostico 
