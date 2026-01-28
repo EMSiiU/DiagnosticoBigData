@@ -136,6 +136,76 @@ class Database:
 
         self.cursor.execute(query)
         return self.cursor.fetchall()
+    
+    def empleados_genero(self):
+        query = """
+        SELECT
+            CASE gender
+                WHEN 'M' THEN 'Hombres'
+                WHEN 'F' THEN 'Mujeres'
+            END AS genero,
+            COUNT(*) AS total_empleados
+        FROM employees
+        GROUP BY gender
+        """
+
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
+    
+    def mejores_salarios(self):
+        query = """
+        SELECT
+            CONCAT(e.first_name, ' ', e.last_name) AS empleado,
+            s.salary
+        FROM employees e
+            JOIN salaries s
+                ON e.emp_no = s.emp_no
+                AND s.to_date = '9999-01-01'
+        ORDER BY s.salary desc
+        LIMIT 10
+        """
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
+    
+    def promedio_salario_departamento(self):
+        query = """
+        SELECT
+            d.dept_name AS departamento,
+            ROUND(AVG(s.salary),2) AS salario_prom
+        FROM departments d
+            JOIN dept_emp de
+                ON d.dept_no = de.dept_no
+                AND de.to_date = '9999-01-01'
+            JOIN salaries s
+                ON s.emp_no = de.emp_no
+                AND s.to_date = '9999-01-01'
+        GROUP BY d.dept_no, d.dept_name
+        ORDER BY salario_prom DESC
+        """
+
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
+    
+    def brecha_salarial(self):
+        query = """
+        SELECT
+            d.dept_name AS departamento,
+            MAX(s.salary) AS salario_max,
+            MIN(s.salary) AS salario_min,
+            (MAX(s.salary) - MIN(s.salary)) AS diferencia
+        FROM departments d
+            JOIN dept_emp de
+                ON d.dept_no = de.dept_no
+                AND de.to_date = '9999-01-01'
+            JOIN salaries s
+                ON s.emp_no = de.emp_no
+                AND s.to_date = '9999-01-01'
+        GROUP BY d.dept_no, d.dept_name
+        ORDER BY d.dept_name
+        """
+
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
 
 if __name__ == "__main__":
     db = Database()
