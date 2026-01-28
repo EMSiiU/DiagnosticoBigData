@@ -50,7 +50,7 @@ class App(ctk.CTk):
 
     def mostrar_vista_reportes(self):
         self.limpiar_panel()
-        self.titulo_vista.configure(text="Reportes de Empleados")
+        self.titulo_vista.configure(text="Menú de Reportes")
         #grid_reportes = ctk.CTkFrame(self.contenido_dinamico, fg_color="transparent")
         #grid_reportes.pack(pady=20, padx=20, fill="both")
         ctk.CTkLabel(self.contenido_dinamico, text="Seleccione un reporte a generar:").pack(pady=15)
@@ -78,7 +78,7 @@ class App(ctk.CTk):
 
     def mostrar_vista_graficos(self):
         self.limpiar_panel()
-        self.titulo_vista.configure(text="Análisis Gráfico")
+        self.titulo_vista.configure(text="Menú de Gráficos")
         #grid_graficos = ctk.CTkFrame(self.contenido_dinamico, fg_color="transparent")
         #grid_graficos.pack(pady=20, padx=20, fill="both")
         ctk.CTkLabel(self.contenido_dinamico, text="Seleccione un tipo de gráfica a generar:").pack(pady=10)
