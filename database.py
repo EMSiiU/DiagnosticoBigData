@@ -44,14 +44,11 @@ class Database:
             AND t.to_date = '9999-01-01'
             AND s.to_date = '9999-01-01'
         """
-
         params = []
         if dept_no:
             query += " AND d.dept_no = %s"
             params.append(dept_no)
-        
         query += "ORDER BY e.emp_no LIMIT 50"
-
         self.cursor.execute(query, params)
         return self.cursor.fetchall()
     
@@ -71,7 +68,6 @@ class Database:
         """
         self.cursor.execute(query)
         return self.cursor.fetchall()
-    
 
     def mejores_pagados(self):
         query = """
@@ -101,7 +97,6 @@ class Database:
             ON ms.dept_no = d.dept_no
         AND ms.max_salary = s.salary
         """
-
         self.cursor.execute(query)
         return self.cursor.fetchall()
     
@@ -114,7 +109,6 @@ class Database:
         GROUP BY YEAR(hire_date)
         ORDER BY anio
         """
-
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
@@ -133,7 +127,6 @@ class Database:
                 AND s.to_date = '9999-01-01'
         GROUP BY d.dept_no, d.dept_name
         """
-
         self.cursor.execute(query)
         return self.cursor.fetchall()
     
@@ -148,7 +141,6 @@ class Database:
         FROM employees
         GROUP BY gender
         """
-
         self.cursor.execute(query)
         return self.cursor.fetchall()
     
@@ -182,7 +174,6 @@ class Database:
         GROUP BY d.dept_no, d.dept_name
         ORDER BY salario_prom DESC
         """
-
         self.cursor.execute(query)
         return self.cursor.fetchall()
     
@@ -203,10 +194,10 @@ class Database:
         GROUP BY d.dept_no, d.dept_name
         ORDER BY d.dept_name
         """
-
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
+# Ejemplo para probar la clase Database
 if __name__ == "__main__":
     db = Database()
     datos = db.empleados(dept_no='d001')
