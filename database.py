@@ -48,7 +48,7 @@ class Database:
         if dept_no:
             query += " AND d.dept_no = %s"
             params.append(dept_no)
-        query += "ORDER BY e.emp_no LIMIT 50"
+        query += "ORDER BY e.emp_no LIMIT 100"
         self.cursor.execute(query, params)
         return self.cursor.fetchall()
     
@@ -153,7 +153,7 @@ class Database:
             JOIN salaries s
                 ON e.emp_no = s.emp_no
                 AND s.to_date = '9999-01-01'
-        ORDER BY s.salary desc
+        ORDER BY s.salary DESC
         LIMIT 10
         """
         self.cursor.execute(query)
@@ -172,7 +172,7 @@ class Database:
                 ON s.emp_no = de.emp_no
                 AND s.to_date = '9999-01-01'
         GROUP BY d.dept_no, d.dept_name
-        ORDER BY salario_prom DESC
+        ORDER BY salario_prom ASC
         """
         self.cursor.execute(query)
         return self.cursor.fetchall()

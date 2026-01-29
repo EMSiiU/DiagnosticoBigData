@@ -46,7 +46,7 @@ class App(ctk.CTk):
     def mostrar_vista_reportes(self):
         self.limpiar_panel()
         self.titulo_vista.configure(text="Menú de Reportes")
-        ctk.CTkLabel(self.contenido_dinamico, text="Seleccione un reporte a generar:").pack(pady=15)
+        ctk.CTkLabel(self.contenido_dinamico, text="Seleccione un reporte a generar:", font=ctk.CTkFont(size=16, weight="bold")).pack(pady=15)
         # Botones de reportes
         #1
         ctk.CTkLabel(self.contenido_dinamico, text="1.- Listado general y filtrado por departamento").pack(pady=2)
@@ -177,7 +177,7 @@ class App(ctk.CTk):
                 emp["contratacion"],
                 emp["departamento"],
                 emp["titulo_actual"],
-                f"${emp['salario_actual']}"
+                f"${emp['salario_actual']:,}"
             ]
             # Coloca los valores en cada celda
             for col, valor in enumerate(valores):
@@ -267,7 +267,7 @@ class App(ctk.CTk):
                 mp["departamento"],
                 mp["no_empleado"],
                 mp["empleado"],
-                f"${mp['salario']}"
+                f"${mp['salario']:,}"
             ]
             # Coloca los valores en cada celda
             for col, valor in enumerate(valores):
@@ -309,7 +309,7 @@ class App(ctk.CTk):
         for fila, data in enumerate(empa, start=1):
             valores = [
                 data["anio"],
-                data["total_empleados"]
+                f"{data['total_empleados']:,} contrataciones"
             ]
             # Coloca los valores en cada celda
             for col, valor in enumerate(valores):
@@ -353,8 +353,8 @@ class App(ctk.CTk):
         for fila, data in enumerate(desc, start=1):
             valores = [
                 data["departamento"],
-                data["total_empleados"],
-                f"${data['salario_prom']}"
+                f"{data["total_empleados"]:,}",
+                f"${data['salario_prom']:,}"
             ]
             # Coloca los valores en cada celda
             for col, valor in enumerate(valores):
@@ -369,7 +369,7 @@ class App(ctk.CTk):
     def mostrar_vista_graficos(self):
         self.limpiar_panel()
         self.titulo_vista.configure(text="Menú de Gráficos")
-        ctk.CTkLabel(self.contenido_dinamico, text="Seleccione un tipo de gráfica a generar:").pack(pady=10)
+        ctk.CTkLabel(self.contenido_dinamico, text="Seleccione un tipo de gráfica a generar:", font=ctk.CTkFont(size=16, weight="bold")).pack(pady=10)
         # Botones de gráficos
         # 1
         ctk.CTkLabel(self.contenido_dinamico, text="1.- Comparación del total de empleados por género").pack(pady=2)
@@ -380,7 +380,7 @@ class App(ctk.CTk):
             )
         btn_grafico1.pack(pady=5)
         # 2
-        ctk.CTkLabel(self.contenido_dinamico, text="2.- Los 10 empleaados mejores pagados").pack(pady=2)
+        ctk.CTkLabel(self.contenido_dinamico, text="2.- Los 10 empleados mejores pagados").pack(pady=2)
         btn_grafico2 = ctk.CTkButton(
             self.contenido_dinamico, 
             text = "Gráfico 2", 
